@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AutoMax | Registrar vehículo</title>
+  <link rel="icon" href="/img/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/css/estilos.css">
+</head>
+<body>
+  <header class="lateral">
+    <a href="/index.html" class="marca"><img src="/img/logo.svg" alt="Logo de AutoMax" width="64" height="64"><span>AutoMax</span></a>
+    <nav aria-label="Menú principal">
+      <a href="/index.html">Inicio</a>
+      <a href="/registrar.html" aria-current="page">Registrar vehículo</a>
+      <a href="/inventario.html">Inventario</a>
+      <button type="button" id="btnCerrarSesion" class="btn-cerrar-sesion">Cerrar sesión</button>
+    </nav>
+    <p class="pie-lateral">Vehículos nuevos<br>Datos guardados en este navegador</p>
+  </header>
+
+  <main>
+    <section id="registro">
+      <h1 id="tituloForm">Registrar vehículo</h1>
+      <form id="formVehiculo" novalidate>
+        <div class="campo"><label for="marca">Marca</label><select id="marca"></select><small class="error"></small></div>
+        <div class="campo"><label for="codigo">Código</label><input type="text" id="codigo" readonly placeholder="Elige una marca"><small class="error"></small></div>
+        <div class="campo"><label for="modelo">Modelo</label><input type="text" id="modelo" placeholder="Corolla Cross"><small class="error"></small></div>
+        <div class="campo"><label for="anio">Año</label><input type="number" id="anio" min="1900" step="1"><small class="error"></small></div>
+        <div class="campo"><label for="color">Color</label><input type="text" id="color" placeholder="Gris plata"><small class="error"></small></div>
+        <div class="campo">
+          <label for="combustible">Tipo de combustible</label>
+          <select id="combustible"><option value="">Selecciona uno</option><option>Gasolina</option><option>Diésel</option><option>Híbrido</option><option>Eléctrico</option><option>Gas (GLP)</option></select>
+          <small class="error"></small>
+        </div>
+        <div class="campo"><label for="precio">Precio (US$)</label><input type="number" id="precio" step="0.01" placeholder="28500"><small class="error"></small></div>
+        <div class="campo"><label for="cantidad">Cantidad disponible</label><input type="number" id="cantidad" placeholder="3"><small class="error"></small></div>
+        <div class="campo ancho"><label for="descripcion">Descripción</label><textarea id="descripcion" rows="3" placeholder="Transmisión, equipamiento, detalles del lote..."></textarea><small class="error"></small></div>
+        <div class="acciones ancho">
+          <button type="submit" id="btnGuardar" class="btn-principal">Guardar vehículo</button>
+          <button type="button" id="btnCancelar" class="btn-suave" hidden>Cancelar edición</button>
+          <a class="btn-suave" href="/inventario.html">Ir al inventario</a>
+        </div>
+      </form>
+    </section>
+  </main>
+  <script src="/js/app.js"></script>
+</body>
+</html>

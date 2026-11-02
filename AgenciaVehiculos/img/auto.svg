@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 260" role="img" aria-label="Ilustración de un auto sobre la carretera">
+  <path d="M40 186 L40 152 Q40 138 56 134 L110 126 L150 88 Q160 78 176 76 L300 76 Q322 76 336 92 L372 126 L440 136 Q462 140 462 162 L462 186 Z" fill="#f2c200"/>
+  <path d="M162 122 L186 90 L238 90 L238 122 Z" fill="#1d4558"/>
+  <path d="M252 122 L252 90 L300 90 Q312 90 320 102 L344 122 Z" fill="#1d4558"/>
+  <rect x="440" y="146" width="22" height="9" rx="3" fill="#fff6c9"/>
+  <rect x="40" y="150" width="12" height="9" rx="3" fill="#b3261e"/>
+  <rect x="244" y="130" width="22" height="5" rx="2" fill="#12303f" opacity=".45"/>
+  <circle cx="120" cy="188" r="42" fill="#12303f"/>
+  <circle cx="380" cy="188" r="42" fill="#12303f"/>
+  <circle cx="120" cy="188" r="34" fill="#0c2230"/>
+  <circle cx="380" cy="188" r="34" fill="#0c2230"/>
+  <circle cx="120" cy="188" r="14" fill="#e3e8ec"/>
+  <circle cx="380" cy="188" r="14" fill="#e3e8ec"/>
+  <path d="M0 232 H500" stroke="#f2c200" stroke-width="5" stroke-dasharray="26 16"/>
+</svg>

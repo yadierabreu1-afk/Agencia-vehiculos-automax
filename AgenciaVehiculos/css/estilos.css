@@ -1,0 +1,210 @@
+/* Colores base. Los sacamos del patio: asfalto, pintura vial y concreto */
+:root {
+  --asfalto: #12303f;
+  --asfalto-osc: #0c2230;
+  --asfalto-claro: #1d4558;
+  --vial: #f2c200;
+  --concreto: #e3e8ec;
+  --papel: #f6f8f9;
+  --tinta: #1b2a33;
+  --gris: #5a6870;
+  --rojo: #b3261e;
+  --ancho-lateral: 230px;
+}
+
+* { box-sizing: border-box; margin: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: "Segoe UI", Tahoma, Verdana, sans-serif;
+  color: var(--tinta);
+  background: var(--concreto);
+  line-height: 1.5;
+  display: grid;
+  grid-template-columns: var(--ancho-lateral) 1fr;
+  min-height: 100vh;
+}
+
+h1, h2, .marca span, th, .placa, .resumen b {
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+}
+
+/* ---------- Lateral ---------- */
+.lateral {
+  background: var(--asfalto);
+  color: var(--concreto);
+  position: sticky; top: 0;
+  height: 100vh;
+  padding: 28px 22px;
+  display: flex; flex-direction: column; gap: 36px;
+  border-right: 6px solid var(--vial);
+}
+.marca { display: flex; align-items: center; gap: 12px; color: #fff; text-decoration: none; }
+.marca span { font-size: 1.7rem; font-weight: 700; }
+.lateral nav { display: flex; flex-direction: column; }
+.lateral nav a {
+  color: var(--concreto); text-decoration: none;
+  padding: 11px 0 11px 14px;
+  border-left: 3px solid transparent;
+  transition: padding .15s;
+}
+.lateral nav .btn-cerrar-sesion {
+  color: var(--concreto); text-align: left; width: 100%; margin-top: 24px;
+  padding: 11px 0 11px 14px; border: 0; border-left: 3px solid transparent;
+  border-radius: 0; background: transparent; transition: padding .15s;
+}
+.lateral nav a:hover,
+.lateral nav a:focus-visible { border-left-color: var(--vial); color: #fff; outline: none; padding-left: 20px; }
+.lateral nav .btn-cerrar-sesion:hover,
+.lateral nav .btn-cerrar-sesion:focus-visible { border-left-color: var(--vial); color: #fff; outline: none; padding-left: 20px; }
+.lateral nav a[aria-current="page"] { border-left-color: var(--vial); color: #fff; }
+.pie-lateral { margin-top: auto; font-size: .8rem; opacity: .65; }
+
+/* ---------- Contenido ---------- */
+main { min-width: 0; padding: 48px clamp(20px, 5vw, 64px) 80px; max-width: 1180px; }
+
+.portada h1 { font-size: clamp(2rem, 4.5vw, 3.4rem); line-height: 1.08; max-width: 18ch; color: var(--asfalto); }
+.portada > p { margin-top: 16px; max-width: 52ch; }
+
+.resumen { display: flex; gap: 14px; margin-top: 26px; flex-wrap: wrap; }
+.resumen div { background: var(--asfalto); color: var(--concreto); padding: 12px 18px; border-radius: 4px; border-bottom: 4px solid var(--vial); }
+.resumen b { color: var(--vial); font-size: 1.7rem; margin-right: 6px; }
+
+.rotulo { margin-top: 34px; font-size: .9rem; font-weight: 600; color: var(--gris); }
+
+/* Tiras de placas: cada marca con su prefijo */
+.placas { list-style: none; padding: 0; margin-top: 10px; display: flex; flex-wrap: wrap; gap: 8px 18px; }
+.placas li { display: flex; align-items: center; gap: 8px; font-size: .9rem; }
+
+/* Estilo placa: fondo blanco, borde oscuro y un filo amarillo arriba */
+.placa {
+  display: inline-block; background: #fff; color: var(--asfalto);
+  border: 2px solid var(--asfalto); border-top: 5px solid var(--vial);
+  border-radius: 4px; padding: 0 8px; line-height: 1.5;
+  font-weight: 700; letter-spacing: .08em; white-space: nowrap;
+}
+
+/* La línea punteada de la carretera, separa las secciones */
+.linea-vial { height: 0; border-top: 5px dashed var(--vial); margin: 52px 0 44px; opacity: .9; }
+
+h2 { font-size: 1.8rem; margin-bottom: 20px; color: var(--asfalto); }
+section { scroll-margin-top: 24px; }
+
+/* ---------- Formularios (registro y filtros) ---------- */
+form {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px 16px;
+  background: var(--papel); padding: 26px; border-radius: 4px;
+  border-top: 6px solid var(--asfalto);
+  box-shadow: 0 2px 0 #c9d2d8;
+}
+form.editando { border-top-color: var(--vial); }
+.ancho { grid-column: 1 / -1; }
+
+.campo label { display: block; font-size: .85rem; font-weight: 600; margin-bottom: 4px; }
+input, select, textarea {
+  width: 100%; padding: 9px 10px; font: inherit; color: inherit;
+  background: #fff; border: 1.5px solid #aab6bd; border-radius: 3px;
+}
+input:focus, select:focus, textarea:focus, button:focus-visible {
+  outline: 3px solid var(--vial); outline-offset: 1px; border-color: var(--asfalto);
+}
+select:disabled { background: var(--concreto); color: var(--gris); }
+
+/* El código automático se ve como una placa grande */
+#codigo {
+  background: #fff; border: 2px solid var(--asfalto); border-top: 5px solid var(--vial);
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  font-weight: 700; letter-spacing: .1em; color: var(--asfalto); cursor: default;
+}
+#codigo::placeholder { letter-spacing: 0; font-weight: 400; color: #8795a0; }
+
+.campo.malo input, .campo.malo select, .campo.malo textarea { border-color: var(--rojo); }
+.error { display: block; color: var(--rojo); font-size: .78rem; min-height: 1.1em; margin-top: 3px; }
+
+.acciones { display: flex; gap: 12px; }
+button, a.btn-principal, a.btn-suave { font: inherit; cursor: pointer; border-radius: 3px; padding: 10px 20px; border: 2px solid var(--asfalto); }
+button:focus-visible, a.btn-principal:focus-visible, a.btn-suave:focus-visible { outline: 3px solid var(--vial); outline-offset: 1px; }
+.btn-principal { background: var(--asfalto); color: #fff; font-weight: 600; }
+.btn-principal:hover { background: var(--asfalto-claro); }
+.btn-suave { background: transparent; color: var(--asfalto); }
+.btn-suave:hover { background: var(--concreto); }
+a.btn-principal, a.btn-suave { display: inline-flex; align-items: center; justify-content: center; text-decoration: none; }
+.portada-acciones { margin-top: 30px; }
+.inventario-accion { margin-top: 20px; }
+
+/* ---------- Filtros del inventario ---------- */
+.filtros {
+  display: grid; grid-template-columns: 2fr 1.2fr 1.2fr 1fr 1fr 1.4fr auto; gap: 12px;
+  align-items: end; background: var(--asfalto); padding: 16px 18px;
+  border-radius: 4px 4px 0 0;
+}
+.filtros label { color: var(--concreto); font-weight: 400; font-size: .78rem; }
+.filtros input, .filtros select { border-color: transparent; padding: 8px 9px; }
+.filtros .btn-suave { color: var(--concreto); border-color: #ffffff55; padding: 8px 12px; font-size: .85rem; }
+.filtros .btn-suave:hover { background: var(--asfalto-claro); }
+.conteo { margin: 0; padding: 8px 18px; background: var(--vial); color: var(--asfalto-osc); font-size: .85rem; font-weight: 600; }
+.conteo:empty { display: none; }
+
+/* ---------- Tabla ---------- */
+.tabla-caja { max-width: 100%; overflow-x: auto; background: var(--papel); border-radius: 0 0 4px 4px; }
+table { width: 100%; border-collapse: collapse; min-width: 800px; }
+th { background: var(--asfalto-claro); color: #fff; text-align: left; padding: 11px 14px; font-weight: 400; white-space: nowrap; letter-spacing: .02em; }
+td { padding: 11px 14px; border-bottom: 1px solid var(--concreto); vertical-align: top; }
+tbody tr:nth-child(even) { background: #eef2f4; }
+tbody tr:hover { background: #fff; }
+.der { text-align: right; }
+td.der { font-variant-numeric: tabular-nums; }
+td small { display: block; color: var(--gris); max-width: 30ch; }
+
+/* Pastilla de color: se usa solo si el nombre es un color que el navegador conoce */
+.chip-color { display: inline-block; width: .8em; height: .8em; border-radius: 50%; border: 1px solid #0004; margin-right: 6px; }
+
+.fila-btns { display: flex; gap: 6px; }
+.fila-btns button { padding: 5px 10px; font-size: .82rem; }
+.btn-borrar { border-color: var(--rojo); color: var(--rojo); background: transparent; }
+.btn-borrar:hover { background: var(--rojo); color: #fff; }
+.btn-editar { background: var(--vial); color: var(--asfalto-osc); border-color: var(--vial); }
+.btn-editar:hover { background: #ffd633; }
+
+.vacio { padding: 26px; text-align: center; background: var(--papel); border-radius: 0 0 4px 4px; }
+.oculto { position: absolute; left: -9999px; }
+
+/* Aviso corto al guardar o borrar */
+.aviso {
+  position: fixed; right: 20px; bottom: 20px; background: var(--asfalto); color: #fff;
+  padding: 12px 18px; border-left: 6px solid var(--vial); border-radius: 3px;
+  transform: translateY(20px); opacity: 0; transition: .25s; pointer-events: none;
+}
+.aviso.ver { transform: none; opacity: 1; }
+
+/* ---------- Pantallas chicas ---------- */
+@media (max-width: 1100px) {
+  .filtros { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .f-buscar { grid-column: 1 / -1; }
+}
+@media (max-width: 900px) {
+  form { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 720px) {
+  body { grid-template-columns: 1fr; }
+  .lateral { position: static; height: auto; flex-direction: row; flex-wrap: wrap; align-items: center; gap: 12px 24px; padding: 14px 18px; border-right: 0; border-bottom: 6px solid var(--vial); }
+  .lateral nav { flex-direction: row; flex-wrap: wrap; gap: 4px 12px; }
+  .lateral nav a { padding: 6px 0; border-left: 0; border-bottom: 3px solid transparent; }
+  .lateral nav .btn-cerrar-sesion { width: auto; margin-top: 0; padding: 6px 0; border-left: 0; border-bottom: 3px solid transparent; }
+  .lateral nav a:hover { border-bottom-color: var(--vial); padding-left: 0; }
+  .lateral nav .btn-cerrar-sesion:hover,
+  .lateral nav .btn-cerrar-sesion:focus-visible { border-left: 0; border-bottom-color: var(--vial); padding-left: 0; }
+  .lateral nav a[aria-current="page"] { border-left-color: transparent; border-bottom-color: var(--vial); }
+  .pie-lateral { display: none; }
+  .marca img { width: 44px; height: 44px; }
+}
+@media (max-width: 520px) {
+  form { grid-template-columns: 1fr; padding: 18px; }
+  .filtros { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .filtros .campo { min-width: 0; }
+  .filtros button { grid-column: 1 / -1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .aviso, .lateral nav a { transition: none; }
+}
