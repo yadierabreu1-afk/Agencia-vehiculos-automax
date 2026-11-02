@@ -58,6 +58,7 @@ h1, h2, .marca span, th, .placa, .resumen b {
 .lateral nav .btn-cerrar-sesion:hover,
 .lateral nav .btn-cerrar-sesion:focus-visible { border-left-color: var(--vial); color: #fff; outline: none; padding-left: 20px; }
 .lateral nav a[aria-current="page"] { border-left-color: var(--vial); color: #fff; }
+.saludo-usuario { display: block; padding: 12px 0 0 14px; color: var(--vial); font-weight: 700; }
 .pie-lateral { margin-top: auto; font-size: .8rem; opacity: .65; }
 
 /* ---------- Contenido ---------- */
@@ -120,6 +121,7 @@ select:disabled { background: var(--concreto); color: var(--gris); }
 
 .campo.malo input, .campo.malo select, .campo.malo textarea { border-color: var(--rojo); }
 .error { display: block; color: var(--rojo); font-size: .78rem; min-height: 1.1em; margin-top: 3px; }
+.vista-imagen { display: block; width: min(100%, 360px); max-height: 220px; object-fit: cover; margin-top: 10px; border: 1px solid #aab6bd; border-radius: 3px; }
 
 .acciones { display: flex; gap: 12px; }
 button, a.btn-principal, a.btn-suave { font: inherit; cursor: pointer; border-radius: 3px; padding: 10px 20px; border: 2px solid var(--asfalto); }
@@ -131,6 +133,12 @@ button:focus-visible, a.btn-principal:focus-visible, a.btn-suave:focus-visible {
 a.btn-principal, a.btn-suave { display: inline-flex; align-items: center; justify-content: center; text-decoration: none; }
 .portada-acciones { margin-top: 30px; }
 .inventario-accion { margin-top: 20px; }
+.contenido-institucional { max-width: 760px; padding-top: 20px; }
+.contenido-institucional h1 { max-width: 20ch; color: var(--asfalto); font-size: clamp(2rem, 4vw, 3rem); line-height: 1.1; }
+.contenido-institucional > p:not(.rotulo) { margin-top: 18px; max-width: 64ch; }
+.sucursal-linea { margin: 34px 0 24px; padding: 22px 0; border-top: 1px solid #aab6bd; border-bottom: 1px solid #aab6bd; }
+.sucursal-linea h2 { margin-bottom: 10px; }
+.sucursal-linea p + p { margin-top: 8px; }
 
 /* ---------- Filtros del inventario ---------- */
 .filtros {
@@ -155,6 +163,8 @@ tbody tr:hover { background: #fff; }
 .der { text-align: right; }
 td.der { font-variant-numeric: tabular-nums; }
 td small { display: block; color: var(--gris); max-width: 30ch; }
+.miniatura-vehiculo { display: block; width: 90px; height: 64px; object-fit: cover; border-radius: 3px; background: var(--concreto); }
+.sin-imagen { color: var(--gris); font-size: .82rem; }
 
 /* Pastilla de color: se usa solo si el nombre es un color que el navegador conoce */
 .chip-color { display: inline-block; width: .8em; height: .8em; border-radius: 50%; border: 1px solid #0004; margin-right: 6px; }
@@ -195,6 +205,7 @@ td small { display: block; color: var(--gris); max-width: 30ch; }
   .lateral nav .btn-cerrar-sesion:hover,
   .lateral nav .btn-cerrar-sesion:focus-visible { border-left: 0; border-bottom-color: var(--vial); padding-left: 0; }
   .lateral nav a[aria-current="page"] { border-left-color: transparent; border-bottom-color: var(--vial); }
+  .saludo-usuario { padding: 6px 0; }
   .pie-lateral { display: none; }
   .marca img { width: 44px; height: 44px; }
 }

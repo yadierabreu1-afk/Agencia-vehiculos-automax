@@ -32,9 +32,19 @@ var tituloForm = document.getElementById("tituloForm");
 var campoMarca = document.getElementById("marca");
 var campoCodigo = document.getElementById("codigo");
 var btnCerrarSesion = document.getElementById("btnCerrarSesion");
+var campoImagen = document.getElementById("imagen");
+var vistaImagen = document.getElementById("vistaImagen");
+var rutaActual = location.pathname.replace(/\/+$/, "") || "/";
+var categoriaPagina = rutaActual === "/vehiculos-usados" ? "usado" :
+  (rutaActual === "/vehiculos-nuevos" ? "nuevo" : "");
+var tituloInventario = document.getElementById("tituloInventario");
+if (tituloInventario && categoriaPagina) {
+  tituloInventario.textContent = categoriaPagina === "nuevo" ? "Vehículos nuevos" : "Vehículos usados";
+  document.title = "AutoMax | " + tituloInventario.textContent;
+}
 
 // ids de los campos, en el mismo orden del formulario
-var campos = ["marca", "codigo", "modelo", "anio", "color", "combustible", "precio", "cantidad", "descripcion"];
+var campos = ["marca", "codigo", "modelo", "anio", "color", "combustible", "transmision", "categoria", "precio", "cantidad", "descripcion"];
 
 var vehiculos = [];
 var codigoEditando = null; // si tiene valor, estamos modificando ese vehículo
@@ -52,7 +62,8 @@ function pedirApi(ruta, opciones) {
 }
 
 function cargarDesdeApi() {
-  return pedirApi("/api/vehiculos")
+  var ruta = "/api/vehiculos" + (categoriaPagina ? "?categoria=" + categoriaPagina : "");
+  return pedirApi(ruta)
     .then(function (resultado) {
       vehiculos = resultado.vehiculos;
       pintar();
@@ -244,12 +255,15 @@ function pintar() {
     lista.forEach(function (v) {
       var fila = document.createElement("tr");
       fila.innerHTML =
+        '<td>' + (v.imagen ? '<img class="miniatura-vehiculo" src="' + limpio(v.imagen) + '" alt="' + limpio(v.marca + " " + v.modelo) + '">' : '<span class="sin-imagen">Sin imagen</span>') + "</td>" +
         '<td><span class="placa">' + limpio(v.codigo) + "</span></td>" +
         "<td>" + limpio(v.marca) + "</td>" +
         "<td>" + limpio(v.modelo) + "<small>" + limpio(v.descripcion) + "</small></td>" +
         "<td>" + v.anio + "</td>" +
         "<td>" + pastilla(v.color) + limpio(v.color) + "</td>" +
         "<td>" + limpio(v.combustible) + "</td>" +
+        "<td>" + limpio(v.transmision) + "</td>" +
+        "<td>" + (v.categoria === "usado" ? "Usado" : "Nuevo") + "</td>" +
         '<td class="der">' + dinero(v.precio) + "</td>" +
         '<td class="der">' + v.cantidad + "</td>" +
         '<td><div class="fila-btns">' +
@@ -307,6 +321,10 @@ function avisar(texto) {
 function salirDeEdicion() {
   codigoEditando = null;
   form.reset();
+  if (vistaImagen) {
+    vistaImagen.src = "";
+    vistaImagen.hidden = true;
+  }
   form.classList.remove("editando");
   campoMarca.disabled = false;
   btnGuardar.textContent = "Guardar vehículo";
@@ -320,6 +338,10 @@ function entrarEnEdicion(codigo) {
   if (!v) return;
 
   campos.forEach(function (id) { document.getElementById(id).value = v[id]; });
+  if (vistaImagen) {
+    vistaImagen.src = v.imagen || "";
+    vistaImagen.hidden = !v.imagen;
+  }
 
   codigoEditando = codigo;
   campoMarca.disabled = true; // si cambia la marca cambiaría el código, así que se queda fija
@@ -343,7 +365,6 @@ if (campoMarca) campoMarca.addEventListener("change", function () {
 if (form) form.addEventListener("submit", async function (e) {
   e.preventDefault();
 
-  // armamos el objeto con lo que escribió el usuario
   var datos = {};
   campos.forEach(function (id) { datos[id] = document.getElementById(id).value.trim(); });
 
@@ -362,12 +383,15 @@ if (form) form.addEventListener("submit", async function (e) {
   btnGuardar.disabled = true;
   try {
     var editando = codigoEditando !== null;
+    var cuerpo = new FormData();
+    campos.forEach(function (id) { cuerpo.append(id, datos[id]); });
+    if (campoImagen && campoImagen.files[0]) cuerpo.append("imagen", campoImagen.files[0]);
+
     var resultado = await pedirApi(
       editando ? "/api/vehiculos/" + encodeURIComponent(codigoEditando) : "/api/vehiculos",
       {
         method: editando ? "PUT" : "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(datos),
+        body: cuerpo,
       }
     );
 
@@ -384,6 +408,14 @@ if (form) form.addEventListener("submit", async function (e) {
 
 if (btnCancelar) btnCancelar.addEventListener("click", salirDeEdicion);
 
+if (campoImagen && vistaImagen) campoImagen.addEventListener("change", function () {
+  var archivo = campoImagen.files[0];
+  if (vistaImagen.dataset.objectUrl) URL.revokeObjectURL(vistaImagen.dataset.objectUrl);
+  vistaImagen.hidden = !archivo;
+  vistaImagen.dataset.objectUrl = archivo ? URL.createObjectURL(archivo) : "";
+  vistaImagen.src = vistaImagen.dataset.objectUrl;
+});
+
 var sesionActual = null;
 try {
   sesionActual = JSON.parse(sessionStorage.getItem("automax_sesion"));
@@ -393,7 +425,15 @@ try {
 
 if (btnCerrarSesion) {
   var esUsuarioRegistrado = sesionActual && sesionActual.tipo === "usuario";
-  if (!esUsuarioRegistrado) btnCerrarSesion.textContent = "Iniciar sesión";
+  var nombreSesion = sesionActual && sesionActual.nombre ? sesionActual.nombre : "Invitado";
+  var saludoUsuario = document.getElementById("saludoUsuario");
+  if (saludoUsuario) saludoUsuario.textContent = "Bienvenido, " + nombreSesion;
+  if (!esUsuarioRegistrado) btnCerrarSesion.textContent = sesionActual ? "Salir de invitado" : "Iniciar sesión";
+
+  document.querySelectorAll(".lateral nav a").forEach(function (enlace) {
+    var destino = new URL(enlace.href, location.origin).pathname.replace(/\/+$/, "") || "/";
+    if (destino === rutaActual) enlace.setAttribute("aria-current", "page");
+  });
 
   btnCerrarSesion.addEventListener("click", function () {
     if (esUsuarioRegistrado && !confirm("¿Seguro que quieres cerrar sesión?")) return;

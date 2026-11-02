@@ -31,17 +31,23 @@ INSERT IGNORE INTO marcas (nombre, sigla) VALUES
   ('Lamborghini', 'LB');
 
 CREATE TABLE IF NOT EXISTS vehiculos (
+  id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
   codigo VARCHAR(10) NOT NULL,
+  marca VARCHAR(80) NOT NULL,
   marca_id SMALLINT UNSIGNED NOT NULL,
   modelo VARCHAR(120) NOT NULL,
   anio SMALLINT UNSIGNED NOT NULL,
-  color VARCHAR(60) NOT NULL,
-  combustible ENUM('Gasolina', 'Diésel', 'Híbrido', 'Eléctrico', 'Gas (GLP)') NOT NULL,
   precio DECIMAL(12, 2) NOT NULL,
-  cantidad INT UNSIGNED NOT NULL DEFAULT 0,
+  color VARCHAR(60) NOT NULL,
+  transmision ENUM('Automática', 'Manual', 'CVT', 'Doble embrague', 'Otra') NOT NULL DEFAULT 'Automática',
+  combustible ENUM('Gasolina', 'Diésel', 'Híbrido', 'Eléctrico', 'Gas (GLP)') NOT NULL,
   descripcion TEXT NOT NULL,
+  imagen VARCHAR(500) NULL,
+  categoria ENUM('nuevo', 'usado') NOT NULL DEFAULT 'nuevo',
+  cantidad INT UNSIGNED NOT NULL DEFAULT 0,
   fecha_registro TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (codigo),
+  UNIQUE KEY uq_vehiculos_id (id),
   KEY ix_vehiculos_marca (marca_id),
   CONSTRAINT fk_vehiculos_marca
     FOREIGN KEY (marca_id) REFERENCES marcas (id)

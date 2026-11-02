@@ -53,7 +53,7 @@ if (formLogin) formLogin.addEventListener("submit", function (e) {
     mostrar(resp.mensaje, resp.ok);
     if (resp.ok) {
       sessionStorage.setItem(SESION, JSON.stringify({ tipo: "usuario", nombre: resp.usuario.nombre }));
-      setTimeout(function () { location.href = "/"; }, 900); // se alcanza a leer el mensaje
+      setTimeout(function () { location.href = "/index.html"; }, 900); // se alcanza a leer el mensaje
     }
   }).catch(falloDeRed).then(function () { boton.disabled = false; });
 });
@@ -92,5 +92,5 @@ if (formRegistro) formRegistro.addEventListener("submit", function (e) {
 var btnInvitado = document.getElementById("btnInvitado");
 if (btnInvitado) btnInvitado.addEventListener("click", function () {
   sessionStorage.setItem(SESION, JSON.stringify({ tipo: "invitado", nombre: "Invitado" }));
-  location.href = "/inventario";
+  location.href = "/index.html";
 });

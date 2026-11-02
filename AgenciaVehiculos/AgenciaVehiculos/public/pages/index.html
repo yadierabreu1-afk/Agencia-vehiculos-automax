@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AutoMax | Inicio</title>
+  <link rel="icon" href="../img/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../css/estilos.css">
+</head>
+<body>
+
+  <!-- Barra lateral: logo + menú -->
+  <header class="lateral">
+    <a href="/index.html" class="marca">
+      <img src="../img/logo.svg" alt="Logo de AutoMax" width="64" height="64">
+      <span>AutoMax</span>
+    </a>
+    <nav aria-label="Menú principal">
+      <span id="saludoUsuario" class="saludo-usuario"></span>
+      <a href="/index.html">Inicio</a>
+      <a href="/vehiculos-nuevos">Vehículos nuevos</a>
+      <a href="/vehiculos-usados">Vehículos usados</a>
+      <a href="/nosotros">Nosotros</a>
+      <a href="/sucursales">Sucursales</a>
+      <a href="/registrar.html">Registro de vehículos</a>
+      <button type="button" id="btnCerrarSesion" class="btn-cerrar-sesion">Cerrar sesión</button>
+    </nav>
+    <p class="pie-lateral">Vehículos nuevos<br>Datos guardados en este navegador</p>
+  </header>
+
+  <main>
+    <section class="portada">
+      <h1>Encuentra el vehículo que va contigo.</h1>
+      <p>Explora vehículos nuevos y usados, o registra una unidad para mantener actualizado el inventario de AutoMax.</p>
+
+      <div class="resumen">
+        <div><b id="totalModelos">0</b> Vehículos registrados</div>
+        <div><b id="totalUnidades">0</b> Unidades disponibles</div>
+      </div>
+
+      <p class="rotulo">Marcas que maneja la agencia y su prefijo de código</p>
+      <ul class="placas" id="listaPlacas"></ul>
+
+      <div class="acciones portada-acciones">
+        <a class="btn-principal" href="/vehiculos-nuevos">Ver vehículos nuevos</a>
+        <a class="btn-suave" href="/vehiculos-usados">Ver vehículos usados</a>
+        <a class="btn-suave" href="/registrar.html">Registrar vehículo</a>
+      </div>
+    </section>
+  </main>
+
+  <script src="../js/app.js"></script>
+</body>
+</html>
