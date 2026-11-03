@@ -479,7 +479,7 @@ if (tbody) tbody.addEventListener("click", async function (e) {
 
 armarMarcas();
 pintar();
-cargarDesdeApi();
-
 var codigoSolicitado = new URLSearchParams(location.search).get("codigo");
-if (form && codigoSolicitado) entrarEnEdicion(codigoSolicitado);
+cargarDesdeApi().then(function () {
+  if (form && codigoSolicitado) entrarEnEdicion(codigoSolicitado);
+});
